@@ -1,3 +1,8 @@
+<div align="center">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/jay-gleeson/calculator-app-java">
+  <img src="https://img.shields.io/badge/Java-%23ED8B00.svg?logo=openjdk&amp;logoColor=white" alt="Java">
+</div>
+
 # Java Calculator App 🧮
 Calculator app built in Java using JFrame.
 
