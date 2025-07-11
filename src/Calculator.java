@@ -1,17 +1,70 @@
 import java.util.Scanner;
 
 public class Calculator {
+
     /*
      * This class represents a calcalator bare-bones.
      * Does not support decimal exponents like roots, unfortunately.
      * 
      * Will write in logic for modularity, using multiple classes.
      */
+
+    public static double add(double a, double b) {
+        double answer;
+        answer = a + b;
+        return answer;
+    }
+
+    public static double subtract(double a, double b) {
+        double answer;
+        answer = a - b;
+        return answer;
+    }
+
+    public static double multiply(double a, double b) {
+        double answer;
+        answer = a * b;
+        return answer;
+    }
+
+    public static double divide(double a, double b) {
+        double answer;
+        answer = a / b;
+        return answer;
+    }
+
+    public static double power(double a, double b) {
+        double answer;
+        if (b % 1.0 != 0) { /* If exponent is a decimal, floor. */
+            System.out.println("Unfortunately, roots are not supported!");
+            System.out.println("Flooring exponent.");
+            b = (int)b;
+        }
+            
+        // Exponent logic, allowing negative exponents.
+        boolean negative = false;  // Initialize negative exponent boolean.
+        if (b < 0) { /* If exponent is less than zero, set negative exponent boolean to true. */
+            b = -b;
+            negative = true;
+        }
+        
+        // Answer should start at one in case b is zero.
+        answer = 1;
+        for (int i = 0; i < b; i++) {
+            answer *= a;  // Exponent logic, a is multiplied by itself b times.
+        }
+        
+        // If b was negative initially, follow exponential logic.
+        if (negative) {
+            answer = 1 / answer;  // If b was negative, answer will be 1/a^|b|.
+        }
+        return answer;
+    }
+
     public static void main(String[] args) throws Exception {
 
         // Create input scanner object.
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Hello, welcome to Calculator!");
 
         // Take user's first number input.
@@ -42,42 +95,19 @@ public class Calculator {
         double answer = 0;
         switch (operation) {
             case "+":  // If addition, add a and b.
-                answer = a + b;
+                answer = add(a, b);
                 break;
             case "-":  // If subtraction, subtract a and b.
-                answer = a - b;
+                answer = subtract(a, b);
                 break;
             case "*":  // If multiplication, multiply a and b.
-                answer = a * b;
+                answer = multiply(a, b);
                 break;
             case "/":  // If division, divide a and b.
-                answer = a / b;
+                answer = divide(a, b);
                 break;
             case "^":  // If exponential, a is base and b is exponent.
-                if (b % 1.0 != 0) { /* If exponent is a decimal, floor. */
-                    System.out.println("Unfortunately, roots are not supported!");
-                    System.out.println("Flooring exponent.");
-                    b = (int)b;
-                    break;
-                }
-                
-                // Exponent logic, allowing negative exponents.
-                boolean negative = false;  // Initialize negative exponent boolean.
-                if (b < 0) { /* If exponent is less than zero, set negative exponent boolean to true. */
-                    b = -b;
-                    negative = true;
-                }
-                
-                // Answer should start at one in case b is zero.
-                answer = 1;
-                for (int i = 0; i < b; i++) {
-                    answer *= a;  // Exponent logic, a is multiplied by itself b times.
-                }
-                
-                // If b was negative initially, follow exponential logic.
-                if (negative) {
-                    answer = 1 / answer;  // If b was negative, answer will be 1/a^|b|.
-                }
+                answer = power(a, b);
                 break;
         }
         
