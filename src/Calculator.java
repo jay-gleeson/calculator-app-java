@@ -32,23 +32,26 @@ public class Calculator {
         // Take user's second number input.
         double b = Double.parseDouble(JOptionPane.showInputDialog(null, "<html><code>" + a +  " " + operation + "</code><br>Enter second number:</html>"));
 
+        // Create an instance of ArithmeticOperations to perform calculations.
+        ArithmeticOperations math = new ArithmeticOperations();
+
         // Based on input operation, perform calculation.
         double answer = 0;
         switch (operation) {
             case "+":  // If addition, add a and b.
-                answer = ArithmeticOperations.add(a, b);
+                answer = math.add(a, b);
                 break;
             case "-":  // If subtraction, subtract a and b.
-                answer = ArithmeticOperations.subtract(a, b);
+                answer = math.subtract(a, b);
                 break;
             case "*":  // If multiplication, multiply a and b.
-                answer = ArithmeticOperations.multiply(a, b);
+                answer = math.multiply(a, b);
                 break;
             case "/":  // If division, divide a and b.
-                answer = ArithmeticOperations.divide(a, b);
+                answer = math.divide(a, b);
                 break;
             case "^":  // If exponential, a is base and b is exponent.
-                answer = ArithmeticOperations.power(a, b);
+                answer = math.power(a, b);
                 break;
         }
         

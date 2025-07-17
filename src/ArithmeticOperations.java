@@ -7,27 +7,24 @@ public class ArithmeticOperations {
      * It does not support decimal exponents like roots, unfortunately.
      * It is used by the Calculator class to perform calculations.
      */
+    private double answer;  // Instance variable to store the answer of the operation.
 
-    public static double add(double a, double b) {
-        double answer;
+    public double add(double a, double b) {
         answer = a + b;
         return answer;
     }
 
-    public static double subtract(double a, double b) {
-        double answer;
+    public double subtract(double a, double b) {
         answer = a - b;
         return answer;
     }
 
-    public static double multiply(double a, double b) {
-        double answer;
+    public double multiply(double a, double b) {
         answer = a * b;
         return answer;
     }
 
-    public static double divide(double a, double b) {
-        double answer;
+    public double divide(double a, double b) {
         if (b == 0) {  /* If divisor is zero, throw exception. */
             throw new ArithmeticException("Cannot divide by zero.");
         }
@@ -35,8 +32,7 @@ public class ArithmeticOperations {
         return answer;
     }
 
-    public static double power(double a, double b) {
-        double answer;
+    public double power(double a, double b) {
         if (b % 1.0 != 0) { /* If exponent is a decimal, throw exception. */
             throw new ArithmeticException("Cannot raise to a decimal power.");
         }
