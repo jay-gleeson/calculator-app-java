@@ -4,7 +4,7 @@
 </div>
 
 # Java Calculator App 🧮
-Calculator app built in Java using JFrame.
+Calculator app built in Java using JOptionPane.
 
 ## Background 🏞️
 As a student taking a short, 8-week Java Programming class over the Summer. I decided to get a head start on the class by creating a classic. The Calculator App. A staple among beginner programmers, I have made this my primary challenge to complete within the coming weeks as my understanding of Java grows as I continue to take the class. While the initial app may be rough, as I learn practices and values of the Java programming language, it will surely improve and finally be a good starter project!
@@ -14,7 +14,7 @@ Note, the learning content of this class is quite archaic from what I can tell, 
 ## Tools 🛠️
 This project will utilize various tools and libraries, like the following:
 - **[Java](https://www.java.com/en/):** Programming language to facilitate underlying logic.
-- **[JFrame](https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html):** Java class for creating a renderable window frame.
+- **[JOptionPane](https://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html):** Java class for creating the dialog box.
 
 ## Instructions 📝
    1. Clone the repo
