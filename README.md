@@ -7,12 +7,12 @@
 Calculator app built in Java using JOptionPane.
 
 ## Background 🏞️
-As a student taking a short, 8-week Java Programming class over the Summer. I decided to get a head start on the class by creating a classic. The Calculator App. A staple among beginner programmers, I have made this my primary challenge to complete within the coming weeks as my understanding of Java grows as I continue to take the class. While the initial app may be rough, as I learn practices and values of the Java programming language, it will surely improve and finally be a good starter project!
+As a student taking a short, 8-week Java Programming class over the summer, a decision was made to get a head start by creating a classic: the Calculator App. A staple among beginner programmers, this project was chosen as the primary challenge to complete over the coming weeks while gaining a deeper understanding of Java. Though the initial app may be rough, as knowledge of Java practices and principles grows throughout the course, the app is expected to improve and evolve into a solid starter project.
 
-Note, the learning content of this class is quite archaic from what I can tell, so once again, the initial app may be rough and outdated, based on the fact this class primarily recommends JDK 11 or 1.6. 
+The learning content of the class appears somewhat outdated, with the recommended JDK versions being either 11 or 1.6, which may result in the initial app appearing rough and somewhat antiquated. Nonetheless, it is seen as an opportunity to gradually refine the app in line with more modern practices.
 
 ## Tools 🛠️
-This project will utilize various tools and libraries, like the following:
+This project utilizes various tools and libraries, like the following:
 - **[Java](https://www.java.com/en/):** Programming language to facilitate underlying logic.
 - **[JOptionPane](https://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html):** Java class for creating the dialog box.
 
