@@ -1,15 +1,21 @@
 import javax.swing.JOptionPane;
 
+/**
+ * The Calculator class provides a simple GUI calculator using JOptionPane.
+ * It prompts the user for two numbers and an operation, performs the calculation,
+ * and displays the result. Supported operations are addition, subtraction,
+ * multiplication, division, and exponentiation (integer exponents only).
+ * This class uses the ArithmeticOperations class for calculation logic.
+ */
 public class Calculator {
 
-    /*
-     * This class represents the GUI for the calculator.
-     * It uses JOptionPane to interact with the user.
-     * It takes user input for two numbers and an operation,
-     * performs the operation, and outputs the result.
-     * Does not support decimal exponents like roots, unfortunately.
+    /**
+     * The main method launches the calculator GUI, takes user input,
+     * performs the selected arithmetic operation, and displays the result.
+     *
+     * @param args command-line arguments (not used)
+     * @throws Exception if an error occurs during input or calculation
      */
-
     public static void main(String[] args) throws Exception {
 
         // Welcome user to the calculator.
@@ -55,7 +61,7 @@ public class Calculator {
                 break;
         }
         
-        // Is answer is floorable without losing significant digits, floor. Then print answer.
+        // If answer is floorable without losing significant digits, floor. Then print answer.
         String answerMsg = "<html><code>" + a +  " " + operation + " " + b + " = " + answer + "</code><br>The answer is: </html>";
         if (answer % 1.0 == 0) {
             JOptionPane.showMessageDialog(null, answerMsg + ((int)answer));
