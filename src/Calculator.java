@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
  * The Calculator class provides a simple GUI calculator using JOptionPane.
  * It prompts the user for two numbers and an operation, performs the calculation,
  * and displays the result. Supported operations are addition, subtraction,
- * multiplication, division, and exponentiation (integer exponents only).
+ * multiplication, division, and exponentiation.
  * This class uses the ArithmeticOperations class for calculation logic.
  */
 public class Calculator {

@@ -1,7 +1,9 @@
+import java.lang.Math;
+
 /**
  * This class represents the internal logic for arithmetic operations.
  * It provides methods for addition, subtraction, multiplication, division,
- * and exponentiation. It does not support decimal exponents like roots.
+ * and exponentiation. Utilizes Java's Math() library for power calculations.
  * It is used by the Calculator class to perform calculations.
  */
 
@@ -71,27 +73,9 @@ public class ArithmeticOperations {
      * @param a the base
      * @param b the exponent
      * @return the result of a raised to the power of b
-     * @throws ArithmeticException if b is not an integer
      */
     public double power(double a, double b) {
-        if (b % 1.0 != 0) {
-            throw new ArithmeticException("Cannot raise to a decimal power.");
-        }
-
-        boolean negative = false;
-        if (b < 0) {
-            b = -b;
-            negative = true;
-        }
-
-        answer = 1;
-        for (int i = 0; i < b; i++) {
-            answer *= a;
-        }
-
-        if (negative) {
-            answer = 1 / answer;
-        }
+        answer = Math.pow(a, b);
         return answer;
     }
 }
