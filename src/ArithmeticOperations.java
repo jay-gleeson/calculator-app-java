@@ -12,7 +12,7 @@ public class ArithmeticOperations {
     /**
      * Instance variable to store the answer of the operation.
      */
-    private double answer;
+    private static double answer;
 
     /**
      * Adds two numbers.
@@ -21,7 +21,7 @@ public class ArithmeticOperations {
      * @param b the second operand
      * @return the sum of a and b
      */
-    public double add(double a, double b) {
+    public static double add(double a, double b) {
         answer = a + b;
         return answer;
     }
@@ -33,7 +33,7 @@ public class ArithmeticOperations {
      * @param b the second operand
      * @return the result of a minus b
      */
-    public double subtract(double a, double b) {
+    public static double subtract(double a, double b) {
         answer = a - b;
         return answer;
     }
@@ -45,7 +45,7 @@ public class ArithmeticOperations {
      * @param b the second operand
      * @return the product of a and b
      */
-    public double multiply(double a, double b) {
+    public static double multiply(double a, double b) {
         answer = a * b;
         return answer;
     }
@@ -58,7 +58,7 @@ public class ArithmeticOperations {
      * @return the result of a divided by b
      * @throws ArithmeticException if b is zero
      */
-    public double divide(double a, double b) {
+    public static double divide(double a, double b) {
         if (b == 0) {
             throw new ArithmeticException("Cannot divide by zero.");
         }
@@ -74,7 +74,7 @@ public class ArithmeticOperations {
      * @param b the exponent
      * @return the result of a raised to the power of b
      */
-    public double power(double a, double b) {
+    public static double power(double a, double b) {
         answer = Math.pow(a, b);
         return answer;
     }
