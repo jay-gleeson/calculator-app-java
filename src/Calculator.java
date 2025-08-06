@@ -10,15 +10,30 @@ import java.awt.event.*;
  * This class uses the ArithmeticOperations class for calculation logic.
  */
 public class Calculator implements ActionListener {
-    JFrame frame;  // Main frame for the calculator GUI.
-    JTextField textfield;  // Text field for displaying input and results.
-    JButton[] numberButtons = new JButton[10];  // Array of buttons for numbers 0-9.
-    JButton addButton, subButton, mulButton, divButton, expButton, negButton, decButton, eqButton, clrButton;
+    JFrame frame; // Main frame for the calculator GUI.
+    JTextField textfield; // Text field for displaying input and results.
+    JButton[] numberButtons = new JButton[10]; // Array of buttons for numbers 0-9.
+    JButton[] operationButtons = new JButton[9]; // Array for operation buttons.
 
-    Font myFont = new Font("Monospaced", Font.BOLD, 30);  // Font for buttons and text field.
+    private CalculatorLogic logic = new CalculatorLogic(); // Logic for calculations.
 
-    double num1, num2, result = 0;  // Variables to hold numbers and result.
-    char operator = ' ';  // Variable to hold the operator.
+    final int ADD = 0, SUB = 1, MUL = 2, DIV = 3, EXP = 4, NEG = 5, DEC = 6, EQL = 7, CLR = 8; // Constants for button indices.
+
+    Font myFont = new Font("Monospaced", Font.BOLD, 30); // Font for buttons and text field.
+
+    double result = 0; // Variables to hold result.
+
+    // Constants for layout and sizing.
+    private static final int FRAME_WIDTH = 410;
+    private static final int FRAME_HEIGHT = 410;
+    private static final int TEXTFIELD_X = 30;
+    private static final int TEXTFIELD_Y = 25;
+    private static final int TEXTFIELD_WIDTH = 340;
+    private static final int TEXTFIELD_HEIGHT = 50;
+    private static final int BTN_WIDTH = 85;
+    private static final int BTN_HEIGHT = 50;
+    private static final int GRID_START_X = 30;
+    private static final int GRID_START_Y = 100;
 
     /**
      * Calculator constructor initializes the calculator.
@@ -28,7 +43,7 @@ public class Calculator implements ActionListener {
         // Set up the main frame.
         frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(410, 410);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
@@ -39,23 +54,26 @@ public class Calculator implements ActionListener {
         textfield.setFont(myFont);
         textfield.setEditable(false); // User cannot type directly.
         textfield.setHorizontalAlignment(JTextField.RIGHT); // Right-align text.
-        textfield.setBounds(30, 25, 340, 50); // Set bounds for the text field.
+        textfield.setBounds(TEXTFIELD_X, TEXTFIELD_Y, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT); // Set bounds for the text field.
         frame.add(textfield);
 
-        // Create operation and special buttons.
-        addButton = new JButton("+");  // Addition
-        subButton = new JButton("-");  // Subtraction
-        mulButton = new JButton("*");  // Multiplication
-        divButton = new JButton("/");  // Division
-        expButton = new JButton("^");  // Exponentiation
-        negButton = new JButton("*-"); // Negative
-        decButton = new JButton(".");  // Decimal
-        eqButton = new JButton("=");   // Equals
-        clrButton = new JButton("C");  // Clear
+        // Initialize operation buttons with labels and set their properties.
+        operationButtons[ADD] = new JButton("+");
+        operationButtons[SUB] = new JButton("-");
+        operationButtons[MUL] = new JButton("*");
+        operationButtons[DIV] = new JButton("/");
+        operationButtons[EXP] = new JButton("^");
+        operationButtons[NEG] = new JButton("*-");
+        operationButtons[DEC] = new JButton(".");
+        operationButtons[EQL] = new JButton("=");
+        operationButtons[CLR] = new JButton("C");
 
-        // Button grid layout parameters.
-        int btnWidth = 85, btnHeight = 50;
-        int startX = 30, startY = 100;
+        // Set up operation and special buttons with font and listeners.
+        for (JButton button : operationButtons) {
+            button.setFont(myFont);
+            button.setFocusable(false); // Disable focus for buttons.
+            button.addActionListener(this); // Add action listener for each button.
+        }
 
         // Initialize number buttons 0-9.
         for (int i = 0; i < 10; i++) {
@@ -65,74 +83,34 @@ public class Calculator implements ActionListener {
             numberButtons[i].addActionListener(this); // Add event listener.
         }
 
-        // Set up operation and special buttons with font and listeners.
-        addButton.setFont(myFont);
-        addButton.setFocusable(false);
-        addButton.addActionListener(this);
-
-        subButton.setFont(myFont);
-        subButton.setFocusable(false);
-        subButton.addActionListener(this);
-
-        mulButton.setFont(myFont);
-        mulButton.setFocusable(false);
-        mulButton.addActionListener(this);
-
-        divButton.setFont(myFont);
-        divButton.setFocusable(false);
-        divButton.addActionListener(this);
-
-        expButton.setFont(myFont);
-        expButton.setFocusable(false);
-        expButton.addActionListener(this);
-
-        negButton.setFont(myFont);
-        negButton.setFocusable(false);
-        negButton.addActionListener(this);
-
-        decButton.setFont(myFont);
-        decButton.setFocusable(false);
-        decButton.addActionListener(this);
-
-        eqButton.setFont(myFont);
-        eqButton.setFocusable(false);
-        eqButton.addActionListener(this);
-
-        clrButton.setFont(myFont);
-        clrButton.setFocusable(false);
-        clrButton.addActionListener(this);
-
         // Number and operator buttons in desired order for the grid.
         JButton[][] buttonGrid = {
-            {numberButtons[1], numberButtons[2], numberButtons[3], addButton},
-            {numberButtons[4], numberButtons[5], numberButtons[6], subButton},
-            {numberButtons[7], numberButtons[8], numberButtons[9], mulButton},
-            {decButton,        numberButtons[0], expButton,        divButton}
+            {numberButtons[1], numberButtons[2], numberButtons[3], operationButtons[ADD]},
+            {numberButtons[4], numberButtons[5], numberButtons[6], operationButtons[SUB]},
+            {numberButtons[7], numberButtons[8], numberButtons[9], operationButtons[MUL]},
+            {operationButtons[DEC], numberButtons[0], operationButtons[EXP], operationButtons[DIV]}
         };
 
         // Set bounds and add to frame (for the 4x4 grid).
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
                 JButton btn = buttonGrid[row][col];
-                btn.setBounds(startX + col * btnWidth, startY + row * btnHeight, btnWidth, btnHeight);
+                btn.setBounds(GRID_START_X + col * BTN_WIDTH, GRID_START_Y + row * BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
                 frame.add(btn);
             }
         }
+        
+        // Last line for the negative, clear, and equals buttons. Clear button is double width.
+        operationButtons[NEG].setBounds(GRID_START_X, GRID_START_Y + 4 * BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT); // Negative button.
+        frame.add(operationButtons[NEG]);
 
-        // Last line: negButton, clrButton, and eqButton (two buttons wide).
-        int eqWidth = btnWidth * 2;
-        int lastY = startY + 4 * btnHeight;
+        operationButtons[CLR].setBounds(GRID_START_X + BTN_WIDTH, GRID_START_Y + 4 * BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT); // Clear button.
+        frame.add(operationButtons[CLR]);
 
-        negButton.setBounds(startX, lastY, btnWidth, btnHeight); // Negative button.
-        frame.add(negButton);
+        operationButtons[EQL].setBounds(GRID_START_X + BTN_WIDTH * 2, GRID_START_Y + 4 * BTN_HEIGHT, BTN_WIDTH * 2, BTN_HEIGHT); // Equals button (double width).
+        frame.add(operationButtons[EQL]);
 
-        clrButton.setBounds(startX + btnWidth, lastY, btnWidth, btnHeight); // Clear button.
-        frame.add(clrButton);
-
-        eqButton.setBounds(startX + btnWidth * 2, lastY, eqWidth, btnHeight); // Equals button (double width).
-        frame.add(eqButton);
-
-        frame.setVisible(true);  // Make the frame visible.
+        frame.setVisible(true); // Make the frame visible.
     }
 
     /**
@@ -151,9 +129,9 @@ public class Calculator implements ActionListener {
         }
 
         // Handle decimal button press.
-        if (e.getSource() == decButton) {
+        if (e.getSource() == operationButtons[DEC]) {
             String current = textfield.getText();
-            // Only add decimal if not already present
+            // Only add decimal if not already present.
             if (!current.contains(".")) {
                 if (current.isEmpty()) {
                     textfield.setText("0.");
@@ -162,8 +140,9 @@ public class Calculator implements ActionListener {
                 }
             }
         } 
+
         // Handle negative button press (toggle sign).
-        else if (e.getSource() == negButton) {
+        else if (e.getSource() == operationButtons[NEG]) {
             String current = textfield.getText();
             if (!current.isEmpty() && !current.equals("0")) {
                 if (current.startsWith("-")) {
@@ -173,87 +152,78 @@ public class Calculator implements ActionListener {
                 }
             }
         } 
+
         // Handle addition.
-        else if (e.getSource() == addButton) {
+        else if (e.getSource() == operationButtons[ADD]) {
             if (!textfield.getText().isEmpty()) {
-                num1 = Double.parseDouble(textfield.getText());
-                operator = '+';
-                textfield.setText(""); // Prepare for next input
+                logic.setNum1(Double.parseDouble(textfield.getText()));
             }
+            logic.setOperator('+');
+            textfield.setText("");
         } 
+
         // Handle subtraction.
-        else if (e.getSource() == subButton) {
+        else if (e.getSource() == operationButtons[SUB]) {
             if (!textfield.getText().isEmpty()) {
-                num1 = Double.parseDouble(textfield.getText());
-                operator = '-';
-                textfield.setText("");
+                logic.setNum1(Double.parseDouble(textfield.getText()));
             }
+            logic.setOperator('-');
+            textfield.setText("");
         } 
+
         // Handle multiplication.
-        else if (e.getSource() == mulButton) {
+        else if (e.getSource() == operationButtons[MUL]) {
             if (!textfield.getText().isEmpty()) {
-                num1 = Double.parseDouble(textfield.getText());
-                operator = '*';
-                textfield.setText("");
+                logic.setNum1(Double.parseDouble(textfield.getText()));
             }
+            logic.setOperator('*');
+            textfield.setText("");
         } 
+
         // Handle division.
-        else if (e.getSource() == divButton) {
+        else if (e.getSource() == operationButtons[DIV]) {
             if (!textfield.getText().isEmpty()) {
-                num1 = Double.parseDouble(textfield.getText());
-                operator = '/';
-                textfield.setText("");
+                logic.setNum1(Double.parseDouble(textfield.getText()));
             }
+            logic.setOperator('/');
+            textfield.setText("");
         } 
+
         // Handle exponentiation.
-        else if (e.getSource() == expButton) {
+        else if (e.getSource() == operationButtons[EXP]) {
             if (!textfield.getText().isEmpty()) {
-                num1 = Double.parseDouble(textfield.getText());
-                operator = '^';
-                textfield.setText("");
+                logic.setNum1(Double.parseDouble(textfield.getText()));
             }
+            logic.setOperator('^');
+            textfield.setText("");
         } 
+
         // Handle equals button press (perform calculation).
-        else if (e.getSource() == eqButton) {
+        else if (e.getSource() == operationButtons[EQL]) {
             if (!textfield.getText().isEmpty()) {
-                num2 = Double.parseDouble(textfield.getText());
-                switch (operator) {
-                    case '+':
-                        result = ArithmeticOperations.add(num1, num2);
-                        break;
-                    case '-':
-                        result = ArithmeticOperations.subtract(num1, num2);
-                        break;
-                    case '*':
-                        result = ArithmeticOperations.multiply(num1, num2);
-                        break;
-                    case '/':
-                        result = ArithmeticOperations.divide(num1, num2);
-                        break;
-                    case '^':
-                        result = ArithmeticOperations.power(num1, num2);
-                        break;
-                    default:
-                        textfield.setText("Err");
-                        return;
-                }
-                // If result can be converted to an integer, display it as such.
-                if (result == (int) result) {
+                logic.setNum2(Double.parseDouble(textfield.getText()));
+                double result = logic.calculate();
+                
+                // If result can be converted to an integer, display it as such. Also, display "Err" if result is Nan.
+                if (Double.isNaN(result)) {
+                    textfield.setText("Err");
+                } else if (Double.isInfinite(result)) {
+                    textfield.setText("Inf");
+                } else if (result == (int) result) {
                     textfield.setText(String.valueOf((int) result));
                 } else {
                     textfield.setText(String.valueOf(result));
                 }
 
-                num1 = result;  // Update num1 for potential further calculations.
+                logic.setNum1(result); // Set the result as the first number for subsequent operations.
+                logic.setOperator(' '); // Reset operator after calculation.
             }
         } 
+        
         // Handle clear button press (reset calculator).
-        else if (e.getSource() == clrButton) {
+        else if (e.getSource() == operationButtons[CLR]) {
             textfield.setText("");
-            num1 = 0;
-            num2 = 0;
-            result = 0;
-            operator = ' ';
+            logic.clear(); // Clear the logic state.
         }
     }
 
@@ -265,6 +235,6 @@ public class Calculator implements ActionListener {
      * @throws Exception if an error occurs during input or calculation.
      */
     public static void main(String[] args) throws Exception {
-        new Calculator();  // Create an instance of Calculator.
+        new Calculator(); // Create an instance of Calculator.
     }
 }
