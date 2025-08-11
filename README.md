@@ -14,6 +14,9 @@ This calculator app was created with the help of various resources, especially a
 ## Tools 🛠️
 This project utilizes various tools and libraries, like the following:
 - **[Java](https://www.java.com/en/):** Programming language to facilitate underlying logic.
+- **[Swing (javax.swing)](https://docs.oracle.com/javase/8/docs/api/javax/swing/package-summary.html):** For building the graphical user interface.
+- **[AWT (java.awt)](https://docs.oracle.com/javase/8/docs/api/java/awt/package-summary.html):** For layout management and fonts.
+- **[AWT Event (java.awt.event)](https://docs.oracle.com/javase/8/docs/api/java/awt/event/package-summary.html):** For handling user interactions/events.
 
 ## Instructions 📝
    1. Clone the repo
@@ -29,6 +32,11 @@ This project utilizes various tools and libraries, like the following:
    ```
       java -cp out Calculator
    ```
+
+# Calculator App 🗨️
+<div align="center">
+  <img alt="App image" src="https://github.com/user-attachments/assets/6a05e107-a372-4754-a68a-c0bb0af222f8">
+</div>
 
 ## License 🧾
 This project is licensed under the [MIT License](LICENSE).
